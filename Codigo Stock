@@ -1,0 +1,28 @@
+CREATE database ControleEstoque;
+
+CREATE TABLE Categoria (
+    CategoriaId INT PRIMARY KEY,
+    Nome varchar(50) NOT NULL
+);
+CREATE TABLE Produto (
+    ProdutoId INT PRIMARY KEY,
+    Nome varchar(100) NOT NULL,
+    Preco DECIMAL(10,2) NOT NULL,
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    CategoriaId INT,
+    FOREIGN KEY (CategoriaId) REFERENCES
+    dbo.Categoria(CategoriaId)
+);
+CREATE TABLE Estoque(
+    ProdutoId INT,
+    Quantidade INT NOT NULL DEFAULT 0,
+    AtualizacaoStock DATETIME DEFAULT GETDATE (),
+    FOREIGN KEY (ProdutoId) REFERENCES
+    dbo.Produto(ProdutoId)
+)
+Alter table Estoque
+add constraint EstoqueProduto
+FOREIGN KEY (ProdutoId)
+    REFERENCES
+    Produto(ProdutoId);
